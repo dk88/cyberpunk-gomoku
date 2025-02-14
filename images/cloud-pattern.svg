@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 80C20 80 30 90 50 90C70 90 80 80 100 80C120 80 130 90 150 90C170 90 180 80 200 80" 
+          stroke="#4A90E2" stroke-width="2" stroke-opacity="0.1"/>
+    <path d="M0 50C20 50 30 60 50 60C70 60 80 50 100 50C120 50 130 60 150 60C170 60 180 50 200 50" 
+          stroke="#4A90E2" stroke-width="2" stroke-opacity="0.1"/>
+    <path d="M0 20C20 20 30 30 50 30C70 30 80 20 100 20C120 20 130 30 150 30C170 30 180 20 200 20" 
+          stroke="#4A90E2" stroke-width="2" stroke-opacity="0.1"/>
+</svg>

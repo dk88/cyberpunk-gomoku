@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusGo - 智能五子棋</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="cyber-background">
+        <div class="cyber-grid"></div>
+        <div class="cyber-glow"></div>
+    </div>
+    
+    <div class="container">
+        <header class="game-header">
+            <h1 class="cyber-title">NexusGo</h1>
+            <p class="subtitle cyber-text">Next-Gen 智能五子棋</p>
+        </header>
+        
+        <div class="game-area">
+            <div id="board" class="cyber-panel">
+                <!-- 棋盘格子由 JavaScript 生成 -->
+            </div>
+            
+            <div class="control-panel cyber-panel">
+                <div class="status-card">
+                    <div class="status-header cyber-text">当前回合</div>
+                    <div class="current-player-display">
+                        <div class="player-piece">
+                            <img src="images/black-piece.svg" alt="黑子" class="piece-icon black active">
+                            <img src="images/white-piece.svg" alt="白子" class="piece-icon white">
+                        </div>
+                        <div class="player-name cyber-text">
+                            <span id="current-player">黑子</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="restart" class="btn-primary cyber-button">
+                    重新开始游戏
+                </button>
+                
+                <div class="mode-select">
+                    <label class="mode-option">
+                        <input type="radio" name="mode" value="ai" checked>
+                        <span class="mode-label cyber-button-small">与 AI 对战</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="mode" value="human">
+                        <span class="mode-label cyber-button-small">双人对战</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

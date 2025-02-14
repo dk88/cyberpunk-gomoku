@@ -1,0 +1,562 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #00F5FF;
+    --secondary-color: #FF3366;
+    --accent-color: #6C63FF;
+    --bg-dark: #0D1117;
+    --bg-light: #161B22;
+    --text-color: #FFFFFF;
+    --neon-glow: 0 0 10px rgba(0, 245, 255, 0.5);
+    --neon-glow-strong: 0 0 20px rgba(0, 245, 255, 0.7);
+}
+
+body {
+    background: var(--bg-dark);
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text-color);
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+/* 移除旧的背景样式 */
+.background-pattern {
+    display: none;
+}
+
+/* 网格背景 */
+.cyber-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg);
+    animation: gridMove 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes gridMove {
+    0% {
+        transform: perspective(500px) rotateX(60deg) translateY(0);
+    }
+    100% {
+        transform: perspective(500px) rotateX(60deg) translateY(50px);
+    }
+}
+
+/* 棋盘样式 */
+#board {
+    display: grid;
+    grid-template-columns: repeat(15, 45px);
+    grid-template-rows: repeat(15, 45px);
+    gap: 0;
+    background: rgba(13, 17, 23, 0.9);
+    padding: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 
+        0 0 20px rgba(0, 245, 255, 0.2),
+        0 0 40px rgba(0, 245, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.cell {
+    width: 45px;
+    height: 45px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.cell:hover {
+    background: rgba(0, 245, 255, 0.1);
+}
+
+.piece {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    position: absolute;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pieceDrop 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes pieceDrop {
+    0% {
+        transform: translate(-50%, -100%) scale(1.2);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.piece.black {
+    background: radial-gradient(circle at 30% 30%, #666666, #000000);
+    box-shadow: 
+        0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.piece.white {
+    background: radial-gradient(circle at 30% 30%, #FFFFFF, #E0E0E0);
+    box-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.3),
+        inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 控制面板样式 */
+.control-panel {
+    background: rgba(13, 17, 23, 0.8);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    backdrop-filter: blur(10px);
+    min-width: 300px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: var(--bg-dark);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    margin: 10px 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite;
+}
+
+@keyframes buttonShine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+/* 标题样式 */
+.game-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4em;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 245, 255, 0.5),
+                     0 0 20px rgba(0, 245, 255, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(0, 245, 255, 0.7),
+                     0 0 40px rgba(0, 245, 255, 0.5),
+                     0 0 60px rgba(0, 245, 255, 0.3);
+    }
+}
+
+.subtitle {
+    color: var(--primary-color);
+    font-size: 1.2em;
+    opacity: 0.8;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+}
+
+/* 布局调整 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.game-area {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+/* 保持其他现有样式不变 */
+/* 游戏标题样式 */
+.game-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+/* 按钮样式 */
+button {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: #357ABD;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.mode-select {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.mode-select label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.mode-select label:hover {
+    background-color: rgba(74, 144, 226, 0.1);
+}
+
+.mode-select input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-color);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* 添加装饰性线条 */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-color) 20%, 
+        var(--primary-color) 80%, 
+        transparent 100%
+    );
+    opacity: 0.1;
+}
+
+.game-area {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.decorative-image.bamboo {
+    position: fixed;
+    width: 100px;
+    height: 80vh;
+    background-image: url('images/bamboo.svg');
+    background-repeat: repeat-y;
+    background-size: contain;
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.decorative-image.bamboo.left {
+    left: 5%;
+    top: 10%;
+}
+
+.decorative-image.bamboo.right {
+    right: 5%;
+    top: 10%;
+    transform: scaleX(-1);
+}
+
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--primary-color), transparent);
+    opacity: 0.1;
+    z-index: -1;
+}
+
+body::before {
+    top: -100px;
+    left: -100px;
+    animation: float 20s infinite alternate;
+}
+
+body::after {
+    bottom: -100px;
+    right: -100px;
+    animation: float 15s infinite alternate-reverse;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(50px, 50px) rotate(180deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .game-area {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    #board {
+        transform: scale(0.9);
+        margin: -20px;
+    }
+}
+
+.cyber-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4.5em;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: var(--neon-glow);
+    animation: titlePulse 2s ease-in-out infinite alternate;
+    margin-bottom: 0.5em;
+}
+
+@keyframes titlePulse {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 245, 255, 0.5),
+                     0 0 20px rgba(0, 245, 255, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(0, 245, 255, 0.7),
+                     0 0 40px rgba(0, 245, 255, 0.5),
+                     0 0 60px rgba(0, 245, 255, 0.3);
+    }
+}
+
+.cyber-text {
+    color: var(--primary-color);
+    text-shadow: var(--neon-glow);
+    font-family: 'Orbitron', sans-serif;
+}
+
+.cyber-panel {
+    background: rgba(13, 17, 23, 0.8);
+    border: 1px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    backdrop-filter: blur(10px);
+    animation: panelGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes panelGlow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 40px rgba(0, 245, 255, 0.4);
+    }
+}
+
+.cyber-button {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: var(--bg-dark);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: var(--neon-glow);
+}
+
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite;
+}
+
+@keyframes buttonShine {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+.cyber-button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--neon-glow-strong);
+}
+
+.cyber-button-small {
+    font-family: 'Orbitron', sans-serif;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--neon-glow);
+}
+
+.cyber-button-small:hover {
+    background: rgba(0, 245, 255, 0.1);
+    box-shadow: var(--neon-glow-strong);
+}
+
+/* 状态卡片样式 */
+.status-card {
+    background: rgba(13, 17, 23, 0.8);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    border: 1px solid rgba(0, 245, 255, 0.2);
+    backdrop-filter: blur(10px);
+    animation: cardGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes cardGlow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+    }
+}
+
+/* 模式选择样式 */
+.mode-select {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.mode-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.mode-label {
+    font-family: 'Orbitron', sans-serif;
+    display: block;
+    padding: 12px 24px;
+    background: rgba(13, 17, 23, 0.8);
+    border-radius: 12px;
+    border: 1px solid var(--primary-color);
+    transition: all 0.3s ease;
+    color: var(--primary-color);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.1);
+}
+
+.mode-option input[type="radio"]:checked + .mode-label {
+    background: rgba(0, 245, 255, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
