@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusGo - 智能五子棋</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.0.2">
 </head>
 <body>
     <div class="cyber-background">
@@ -26,20 +26,8 @@
             <div class="control-panel cyber-panel">
                 <div class="status-card">
                     <div class="status-header cyber-text">当前回合</div>
-                    <div class="current-player-display">
-                        <div class="player-piece">
-                            <img src="images/black-piece.svg" alt="黑子" class="piece-icon black active">
-                            <img src="images/white-piece.svg" alt="白子" class="piece-icon white">
-                        </div>
-                        <div class="player-name cyber-text">
-                            <span id="current-player">黑子</span>
-                        </div>
-                    </div>
+                    <div id="current-player" class="current-player-display">黑子</div>
                 </div>
-                
-                <button id="restart" class="btn-primary cyber-button">
-                    重新开始游戏
-                </button>
                 
                 <div class="mode-select">
                     <label class="mode-option">
@@ -51,9 +39,14 @@
                         <span class="mode-label cyber-button-small">双人对战</span>
                     </label>
                 </div>
+
+                <button id="restart" class="btn-primary cyber-button">
+                    重新开始游戏
+                </button>
             </div>
         </div>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

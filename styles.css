@@ -4,6 +4,8 @@
     --primary-color: #00F5FF;
     --secondary-color: #FF3366;
     --accent-color: #6C63FF;
+    --accent-color-2: #FFD700;
+    --accent-color-3: #FF1493;
     --bg-dark: #0D1117;
     --bg-light: #161B22;
     --text-color: #FFFFFF;
@@ -33,7 +35,7 @@ body {
     height: 100%;
     background-image: 
         linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
+        linear-gradient(90deg, rgba(255, 51, 102, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
     transform: perspective(500px) rotateX(60deg);
     animation: gridMove 20s linear infinite;
@@ -64,6 +66,7 @@ body {
         0 0 20px rgba(0, 245, 255, 0.2),
         0 0 40px rgba(0, 245, 255, 0.1);
     backdrop-filter: blur(10px);
+    flex: 0 0 auto;  /* 防止棋盘缩放 */
 }
 
 .cell {
@@ -113,6 +116,29 @@ body {
         inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+.piece.winner {
+    animation: winnerPulse 1.5s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes winnerPulse {
+    0% {
+        box-shadow: 0 0 15px var(--accent-color-2),
+                   0 0 30px var(--accent-color-2);
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        box-shadow: 0 0 25px var(--accent-color-2),
+                   0 0 50px var(--accent-color-2);
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        box-shadow: 0 0 15px var(--accent-color-2),
+                   0 0 30px var(--accent-color-2);
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
 /* 控制面板样式 */
 .control-panel {
     background: rgba(13, 17, 23, 0.8);
@@ -125,10 +151,17 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    flex: 0 0 250px;  /* 固定宽度 */
+    align-self: stretch;  /* 拉伸至与棋盘等高 */
 }
 
 .btn-primary {
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(45deg, 
+        var(--primary-color), 
+        var(--secondary-color),
+        var(--accent-color)
+    );
     border: none;
     color: var(--bg-dark);
     padding: 12px 24px;
@@ -137,16 +170,15 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    font-family: 'Orbitron', sans-serif;
-    margin: 10px 0;
-    width: 100%;
     position: relative;
     overflow: hidden;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+    box-shadow: 
+        0 0 20px rgba(0, 245, 255, 0.4),
+        0 0 40px rgba(255, 51, 102, 0.2);
 }
 
 .btn-primary::after {
@@ -156,7 +188,12 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
     transform: rotate(45deg);
     animation: buttonShine 3s infinite;
 }
@@ -179,14 +216,20 @@ body {
 h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 4em;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(45deg, 
+        var(--primary-color), 
+        var(--secondary-color),
+        var(--accent-color),
+        var(--accent-color-2),
+        var(--accent-color-3)
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    animation: titleGlow 2s ease-in-out infinite alternate;
+    animation: titleGlow 4s ease-in-out infinite alternate;
 }
 
 @keyframes titleGlow {
@@ -231,11 +274,27 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
-    padding: 15px;
+    padding: 12px;
+    font-size: 1.2em;
     background: rgba(0, 245, 255, 0.05);
     border-radius: 8px;
     border: 1px solid rgba(0, 245, 255, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+.current-player-display.black {
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(40, 40, 40, 0.8));
+    border: 1px solid var(--accent-color-2);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.current-player-display.white {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(200, 200, 200, 0.1));
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
 }
 
 .player-piece {
@@ -264,23 +323,30 @@ h1 {
 }
 
 /* 布局调整 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .game-area {
     display: flex;
     gap: 30px;
     justify-content: center;
     align-items: flex-start;
-    flex-wrap: wrap;
     margin: 0 auto;
     max-width: 1200px;
+    flex-wrap: nowrap;  /* 防止换行 */
 }
 
+/* 响应式布局 */
 @media (max-width: 1024px) {
     .game-area {
         gap: 20px;
     }
     
     .control-panel {
-        min-width: 220px;
+        flex: 0 0 220px;
     }
 }
 
@@ -291,16 +357,10 @@ h1 {
     }
     
     .control-panel {
+        flex: none;
         width: 100%;
         max-width: 400px;
     }
-}
-
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative;
 }
 
 /* 添加装饰性线条 */
@@ -389,7 +449,13 @@ body::after {
     font-family: 'Orbitron', sans-serif;
     font-size: 4.5em;
     text-transform: uppercase;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(45deg, 
+        var(--primary-color), 
+        var(--secondary-color),
+        var(--accent-color),
+        var(--accent-color-2),
+        var(--accent-color-3)
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -533,4 +599,30 @@ body::after {
     background: rgba(0, 245, 255, 0.1);
     border-color: var(--primary-color);
     box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
+
+.cyber-background::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 51, 102, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(108, 99, 255, 0.1) 0%, transparent 60%);
+    z-index: -2;
+    animation: backgroundPulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundPulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
 }
