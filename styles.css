@@ -121,7 +121,10 @@ body {
     border: 1px solid var(--primary-color);
     box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
     backdrop-filter: blur(10px);
-    min-width: 300px;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .btn-primary {
@@ -205,83 +208,92 @@ h1 {
     text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
 }
 
-/* 布局调整 */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
+/* 状态卡片样式 */
+.status-card {
+    background: rgba(13, 17, 23, 0.9);
+    border-radius: 12px;
     padding: 20px;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.15);
 }
 
-.game-area {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-
-/* 保持其他现有样式不变 */
-/* 游戏标题样式 */
-.game-header {
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-}
-
-/* 按钮样式 */
-button {
-    width: 100%;
-    padding: 12px 24px;
+.status-header {
+    color: var(--primary-color);
     font-size: 1.1em;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-bottom: 25px;
-    transition: all 0.3s ease;
-    font-weight: 500;
+    margin-bottom: 15px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-button:hover {
-    background-color: #357ABD;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-.mode-select {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.mode-select label {
-    cursor: pointer;
+.current-player-display {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0, 245, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 245, 255, 0.2);
 }
 
-.mode-select label:hover {
-    background-color: rgba(74, 144, 226, 0.1);
+.player-piece {
+    position: relative;
+    width: 40px;
+    height: 40px;
 }
 
-.mode-select input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--primary-color);
+.piece-icon {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.piece-icon.active {
+    opacity: 1;
+}
+
+.player-name {
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+
+/* 布局调整 */
+.game-area {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+@media (max-width: 1024px) {
+    .game-area {
+        gap: 20px;
+    }
+    
+    .control-panel {
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-area {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-width: 400px;
+    }
 }
 
 .container {
@@ -370,23 +382,6 @@ body::after {
     }
     100% {
         transform: translate(50px, 50px) rotate(180deg);
-    }
-}
-
-@media (max-width: 768px) {
-    .game-area {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .control-panel {
-        width: 100%;
-        max-width: 400px;
-    }
-    
-    #board {
-        transform: scale(0.9);
-        margin: -20px;
     }
 }
 
@@ -504,27 +499,6 @@ body::after {
 .cyber-button-small:hover {
     background: rgba(0, 245, 255, 0.1);
     box-shadow: var(--neon-glow-strong);
-}
-
-/* 状态卡片样式 */
-.status-card {
-    background: rgba(13, 17, 23, 0.8);
-    border-radius: 16px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
-    border: 1px solid rgba(0, 245, 255, 0.2);
-    backdrop-filter: blur(10px);
-    animation: cardGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes cardGlow {
-    0% {
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
-    }
-    100% {
-        box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
-    }
 }
 
 /* 模式选择样式 */
