@@ -322,65 +322,90 @@ h1 {
     color: var(--text-color);
 }
 
-/* 布局调整 */
+/* 容器布局 */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
 
 .game-area {
     display: flex;
     gap: 30px;
-    justify-content: center;
     align-items: flex-start;
-    margin: 0 auto;
-    max-width: 1200px;
-    flex-wrap: nowrap;  /* 防止换行 */
+    width: 100%;
+    justify-content: center;
 }
 
-/* 响应式布局 */
-@media (max-width: 1024px) {
-    .game-area {
-        gap: 20px;
-    }
-    
-    .control-panel {
-        flex: 0 0 220px;
-    }
-}
-
-@media (max-width: 768px) {
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
     .game-area {
         flex-direction: column;
         align-items: center;
+        gap: 20px;
     }
-    
+
+    #board {
+        grid-template-columns: repeat(15, minmax(20px, 30px));
+        grid-template-rows: repeat(15, minmax(20px, 30px));
+        padding: 10px;
+    }
+
+    .cell {
+        width: auto;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .piece {
+        width: 80%;
+        height: 80%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
     .control-panel {
-        flex: none;
         width: 100%;
         max-width: 400px;
+        flex: none;
+        padding: 15px;
+    }
+
+    .game-header {
+        text-align: center;
+    }
+
+    .cyber-title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
     }
 }
 
-/* 添加装饰性线条 */
-.container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        var(--primary-color) 20%, 
-        var(--primary-color) 80%, 
-        transparent 100%
-    );
-    opacity: 0.1;
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    #board {
+        grid-template-columns: repeat(15, minmax(18px, 25px));
+        grid-template-rows: repeat(15, minmax(18px, 25px));
+        padding: 5px;
+    }
+
+    .control-panel {
+        padding: 10px;
+    }
 }
 
+/* 布局调整 */
 .game-area {
     display: flex;
     justify-content: center;
